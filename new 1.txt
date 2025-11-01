@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Bitcoin लाइव कैंडल चार्ट 24/7</title>
+<script src="https://s3.tradingview.com/tv.js"></script>
+<style>
+  body {
+    background-color: #14181c;
+    color: white;
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    text-align: center;
+  }
+  #chart-container {
+    margin-top: 20px;
+    width: 90%;
+    height: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  select {
+    font-size: 16px;
+    padding: 5px;
+  }
+</style>
+</head>
+<body>
+
+<h2>Bitcoin लाइव कैंडलस्टिक चार्ट</h2>
+<label for="timeframe">टाइमफ्रेम चुनें: </label>
+<select id="timeframe" onchange="updateChart()">
+  <option value="15">15 मिनट</option>
+  <option value="30" selected>30 मिनट</option>
+  <option value="45">45 मिनट</option>
+</select>
+
+<div id="chart-container"></div>
+
+<script>
+  let chartWidget = null;
+
+  function createChart(interval) {
+    if(chartWidget) {
+      chartWidget.remove();
+    }
+    chartWidget = new TradingView.widget({
+      width: "100%",
+      height: 600,
+      symbol: "BINANCE:BTCUSDT",
+      interval: interval,
+      timezone: "Asia/Kolkata",
+      theme: "dark",
+      style: "1",
+      locale: "hi",
+      toolbar_bg: "#f1f3f6",
+      enable_publishing: false,
+      container_id: "chart-container",
+      allow_symbol_change: true,
+    });
+  }
+
+  function updateChart() {
+    const timeframe = document.getElementById("timeframe").value;
+    createChart(timeframe);
+  }
+
+  // Initialize with default 30 minute chart
+  createChart("30");
+</script>
+
+</body>
+</html>
